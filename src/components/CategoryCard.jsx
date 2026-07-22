@@ -6,8 +6,7 @@ export default function CategoryCard({ category }) {
 
       <Link
         to={`/products?category=${category.name}`}
-        className="text-decoration-none"
-      >
+        className="text-decoration-none">
         <div className="card">
 
           <img

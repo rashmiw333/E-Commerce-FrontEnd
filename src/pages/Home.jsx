@@ -46,7 +46,7 @@ export default function Home() {
 
               <div className="card-body">
                 <h6>{product.name}</h6>
-                <h5>₹ {product.price}</h5>
+                <h5>${product.price}</h5>
               </div>
             </div>
           </div>
