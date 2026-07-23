@@ -19,8 +19,8 @@ export default function ProductCard({ product }) {
         <div className="card-body d-flex flex-column">
          <h6>{product.name}</h6>
          <small className="text-muted">{product.brand}</small>
-        <div className="my-2">⭐ {product.rating}</div>
-          <h5>$ {product.price}</h5>
+        <div className="my-2">⭐{product.rating}</div>
+          <h5>${product.price}</h5>
           <button className="btn btn-primary mt-auto">Add To Cart</button>
         </div>
       </div>
