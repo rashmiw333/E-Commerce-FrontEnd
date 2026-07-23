@@ -1,12 +1,14 @@
 import {Link,useParams} from "react-router-dom";
 import useProductContext from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
+import useWishListContext from "../context/WishListContext";
 
 
 export default function ProductDetails(){
 
     const {productId} = useParams();
     const {products,productLoading} = useProductContext();
+    const { wishListItems, toggleWishlist } = useWishListContext();
 
     if(productLoading){
         return <h3 className="text-center mt-5">Loading...</h3>
@@ -17,6 +19,8 @@ export default function ProductDetails(){
     if(!product){
         return <h3 className="text-center mt-5">Product Not Found</h3>
     }
+
+    const isInWishList = wishListItems.some((item) => item._id === product._id);
 
     return(
         <div className="container mt-5">
@@ -41,7 +45,9 @@ export default function ProductDetails(){
                     <p><strong>Category:</strong>{product.category}</p>
                     <p>{product.description}</p>
                     <button className="btn btn-primary me-2">Add To Cart</button>
-                    <button className="btn btn-outline-danger">Add To WishList</button>
+                    <button className="btn btn-outline-danger" onClick={() => toggleWishlist(product)}>
+                      {isInWishList ? "❤️ Remove from Wishlist" : "🤍 Add to Wishlist"}
+                    </button>
                     <br />
                     <br />
                     <Link to="/products" className="btn btn-secondary">Back To Products</Link>
@@ -51,7 +57,7 @@ export default function ProductDetails(){
             <h3>Similar Products</h3>
             <div className="row">
                 {products.filter(item =>item.category === product.category
-                    && item._id != product._id).slice(0,4).map(product=>(
+                    && item._id !== product._id).slice(0,4).map(product=>(
                         <ProductCard key={product._id} product={product}/>
                     ))}
             </div>

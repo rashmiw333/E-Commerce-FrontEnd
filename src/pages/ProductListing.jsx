@@ -16,7 +16,8 @@ export default function ProductListing() {
 
   const [rating, setRating] = useState(1);
 
-  const [sort, setSort] = useState("");
+  const [sort, setSort] = useState(
+    "");
 
   let filteredProducts = [...products];
 

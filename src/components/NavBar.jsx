@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import useWishListContext from "../context/WishListContext";
 
 export default function Navbar() {
+
+  const {wishListItems} = useWishListContext();
+  
   return (
     <nav className="navbar navbar-light bg-light px-5">
       <Link
@@ -21,7 +25,7 @@ export default function Navbar() {
           to="/wishlist"
           className="btn btn-outline-danger me-2"
         >
-          Wishlist
+          Wishlist ({wishListItems.length})
         </Link>
 
         <Link
