@@ -2,6 +2,7 @@ import {Link,useParams} from "react-router-dom";
 import useProductContext from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import useWishListContext from "../context/WishListContext";
+import useCartContext from "../context/CartContext";
 
 
 export default function ProductDetails(){
@@ -9,6 +10,7 @@ export default function ProductDetails(){
     const {productId} = useParams();
     const {products,productLoading} = useProductContext();
     const { wishListItems, toggleWishlist } = useWishListContext();
+    const {addToCart} = useCartContext();
 
     if(productLoading){
         return <h3 className="text-center mt-5">Loading...</h3>
@@ -44,7 +46,7 @@ export default function ProductDetails(){
                     <p><strong>Brand:</strong>{product.brand}</p>
                     <p><strong>Category:</strong>{product.category}</p>
                     <p>{product.description}</p>
-                    <button className="btn btn-primary me-2">Add To Cart</button>
+                    <button className="btn btn-primary me-2" onClick={()=>addToCart(product)}>Add To Cart</button>
                     <button className="btn btn-outline-danger" onClick={() => toggleWishlist(product)}>
                       {isInWishList ? "❤️ Remove from Wishlist" : "🤍 Add to Wishlist"}
                     </button>

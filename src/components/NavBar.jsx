@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useWishListContext from "../context/WishListContext";
+import useCartContext from "../context/CartContext";
 
 export default function Navbar() {
 
   const {wishListItems} = useWishListContext();
+  const {cartItems} = useCartContext();
   
   return (
     <nav className="navbar navbar-light bg-light px-5">
@@ -32,7 +34,7 @@ export default function Navbar() {
           to="/cart"
           className="btn btn-primary"
         >
-          Cart
+          Cart ({cartItems.length})
         </Link>
 
       </div>
