@@ -3,6 +3,8 @@ import useProductContext from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import useWishListContext from "../context/WishListContext";
 import useCartContext from "../context/CartContext";
+import FeedbackForm from "../components/FeedbackForm";
+import FeedbackList from "../components/FeedbackList";
 
 
 export default function ProductDetails(){
@@ -62,6 +64,10 @@ export default function ProductDetails(){
                     && item._id !== product._id).slice(0,4).map(product=>(
                         <ProductCard key={product._id} product={product}/>
                     ))}
+            </div>
+            <div className="container mt-5">
+                <FeedbackList productId={product._id}/>
+                <FeedbackForm productId={product._id}/>   
             </div>
         </div>
     );

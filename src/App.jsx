@@ -8,6 +8,7 @@ import Cart from "./pages/Cart.jsx"
 import { ProductProvider } from "./context/ProductContext.jsx";
 import { WishListProvider } from "./context/WishListContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
+import { FeedbackProvider } from "./context/FeedbackContext.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
     <ProductProvider>
       <WishListProvider>
         <CartProvider>
+          <FeedbackProvider>
       <Router>
         <NavBar />
         <Routes>
@@ -25,6 +27,7 @@ export default function App() {
         <Route path="/cart" element={<Cart/>}/>
         </Routes>
       </Router>
+          </FeedbackProvider>
         </CartProvider>
       </WishListProvider>
     </ProductProvider>
