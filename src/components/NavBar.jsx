@@ -1,11 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import useWishListContext from "../context/WishListContext";
 import useCartContext from "../context/CartContext";
+import useProductContext from "../context/ProductContext";
 
 export default function Navbar() {
 
   const {wishListItems} = useWishListContext();
   const {cartItems} = useCartContext();
+  const { search, setSearch } = useProductContext();
+
+  const navigate = useNavigate();
   
   return (
     <nav className="navbar navbar-light bg-light px-5">
@@ -16,10 +20,17 @@ export default function Navbar() {
         ElectroMart
       </Link>
 
-      <input
-        className="form-control w-50"
-        placeholder="Search Products"
-      />
+    <input type="text"
+      className="form-control w-50"
+      placeholder="Search Products"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      onKeyDown={(e) => {
+       if (e.key === "Enter") {
+       navigate("/products");
+        }
+      }}
+     />
 
       <div>
 

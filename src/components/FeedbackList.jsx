@@ -23,9 +23,6 @@ export default function FeedbackList({productId}){
                                 <p>Rating: {"⭐".repeat(feedback.rating)}</p>
 
                                 <p>{feedback.comment}</p>
-
-                                {/* <button className="btn btn-danger btn-sm"
-                                onClick={()=>deleteFeedback(feedback.id)}>Delete</button> */}
                             </div>
                         </div>
                     ))

@@ -5,7 +5,7 @@ import FilterSidebar from "../components/FilterSidebar";
 import ProductCard from "../components/ProductCard";
 
 export default function ProductListing() {
-  const { products, categories, productLoading } = useProductContext();
+  const { products, categories, productLoading,search } = useProductContext();
 
   const [searchParams] = useSearchParams();
 
@@ -20,6 +20,7 @@ export default function ProductListing() {
     "");
 
   let filteredProducts = [...products];
+
 
   // Category Filter
   if (selectedCategory !== "") {
@@ -41,6 +42,18 @@ export default function ProductListing() {
   if (sort === "high") {
     filteredProducts.sort((a, b) => b.price - a.price);
   }
+
+  //search Filter
+  if(search){
+    filteredProducts = filteredProducts.filter(product =>
+      product.name
+      .toLowerCase()
+      .includes(search.toLowerCase())||
+      product.brand.toLowerCase().includes(search.toLowerCase()) ||
+      product.category.toLowerCase().includes(search.toLowerCase())
+    );
+}
+
 
   function clearFilters() {
     setSelectedCategory("");

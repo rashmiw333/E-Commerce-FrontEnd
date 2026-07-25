@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext,useState } from "react";
 import useFetch from "../hooks/UseFetch";
 
 const ProductContext = createContext();
@@ -7,6 +7,8 @@ const useProductContext =() => useContext(ProductContext);
 export default useProductContext;
 
 export function ProductProvider({ children }) {
+
+  const [search, setSearch] = useState("");
 
 const {
   data: productResponse,
@@ -28,6 +30,8 @@ const categories = categoryResponse?.data?.categories || [];
         categories,
         productLoading,
         categoryLoading,
+        search,
+        setSearch
       }}
     >
       {children}
