@@ -20,6 +20,10 @@ export default function Navbar() {
         ElectroMart
       </Link>
 
+      <Link to="/orders" className="btn btn-outline-dark me-2">
+      Orders
+      </Link>
+
     <input type="text"
       className="form-control w-50"
       placeholder="Search Products"

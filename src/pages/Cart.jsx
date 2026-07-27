@@ -1,13 +1,33 @@
+import { useNavigate } from "react-router-dom";
 import useCartContext from "../context/CartContext";
+import useOrderContext from "../context/OrderContext";
 
 export default function Cart(){
 
-const {cartItems,removeFromCart,increaseQuantity,decreaseQuantity} = useCartContext();
+const {cartItems,removeFromCart,increaseQuantity,decreaseQuantity,clearCart} = useCartContext();
+
+const { addOrder } = useOrderContext();
+const navigate = useNavigate();
 
  const totalPrice = cartItems.reduce(
     (total, item) => total + item.product.price * item.quantity,
     0
   );
+
+  function placeOrder(){
+
+     const order={
+      id:Date.now(),
+      orderDate:new Date().toLocaleDateString(),
+      items:cartItems,
+      totalAmount:totalPrice
+     }
+
+     addOrder(order);
+     clearCart();
+     navigate("/orders");
+
+    }
 
     return (
         <div className="container mt-4">
@@ -59,6 +79,7 @@ const {cartItems,removeFromCart,increaseQuantity,decreaseQuantity} = useCartCont
 
                             <button className="btn btn-danger mb-2"
                             onClick={()=>removeFromCart(item.product)}>Remove From Cart</button>
+
                           </div>
                         </div>
                        </div>
@@ -85,7 +106,7 @@ const {cartItems,removeFromCart,increaseQuantity,decreaseQuantity} = useCartCont
                             <span>Total</span>
                             <span>${totalPrice}</span>
                         </h5>
-                        <button className="btn btn-warning w-100 mt-3">Place Order</button>
+                        <button className="btn btn-warning w-100 mt-3" onClick={placeOrder}>Place Order</button>
                     </div>
                 </div>
              </div>
