@@ -1,33 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import useCartContext from "../context/CartContext";
-import useOrderContext from "../context/OrderContext";
 
 export default function Cart(){
 
 const {cartItems,removeFromCart,increaseQuantity,decreaseQuantity,clearCart} = useCartContext();
 
-const { addOrder } = useOrderContext();
-const navigate = useNavigate();
-
- const totalPrice = cartItems.reduce(
+const totalPrice = cartItems.reduce(
     (total, item) => total + item.product.price * item.quantity,
     0
   );
 
-  function placeOrder(){
-
-     const order={
-      id:Date.now(),
-      orderDate:new Date().toLocaleDateString(),
-      items:cartItems,
-      totalAmount:totalPrice
-     }
-
-     addOrder(order);
-     clearCart();
-     navigate("/orders");
-
-    }
+  const navigate = useNavigate();
 
     return (
         <div className="container mt-4">
@@ -106,7 +89,7 @@ const navigate = useNavigate();
                             <span>Total</span>
                             <span>${totalPrice}</span>
                         </h5>
-                        <button className="btn btn-warning w-100 mt-3" onClick={placeOrder}>Place Order</button>
+                        <button className="btn btn-warning w-100 mt-3" onClick={() => navigate("/checkout")}>Proceed to Checkout</button>
                     </div>
                 </div>
              </div>
