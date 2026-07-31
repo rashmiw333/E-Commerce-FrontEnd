@@ -1,22 +1,43 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const OrderContext = createContext();
 
-const useOrderContext =()=> useContext(OrderContext);
+const useOrderContext = () => useContext(OrderContext);
 export default useOrderContext;
 
 export function OrderProvider({ children }) {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  function addOrder(order) {
-    setOrders([...orders, order]);
+  console.log(orders,"orders");
+
+  async function fetchOrders() {
+    try {
+      const response = await fetch("http://localhost:3000/api/orders");
+      const data = await response.json();
+
+      if (response.ok) {
+        setOrders(data.data.orders);
+      } else {
+        setOrders([]);
+      }
+    } catch (error) {
+      console.log(error);
+      setOrders([]);
+      setLoading(false);
+    } 
   }
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   return (
     <OrderContext.Provider
       value={{
         orders,
-        addOrder
+        loading,
+        fetchOrders,
       }}
     >
       {children}

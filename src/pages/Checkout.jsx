@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import  useCartContext from "../context/CartContext";
 import useAddressContext from "../context/AddressContext";
+import useOrderContext from "../context/OrderContext";
 
 export default function Checkout() {
   const { cartItems,clearCart } = useCartContext();
   const { addresses } = useAddressContext();
+  const { fetchOrders } = useOrderContext();
 
   const [selectedAddressId, setSelectedAddressId] = useState("");
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   const totalAmount = cartItems.reduce(
     (total, item) => total + item.product.price * item.quantity,
@@ -15,7 +18,7 @@ export default function Checkout() {
   );
 
   const navigate = useNavigate();
-  
+
  async function handlePlaceOrder() {
     if (!selectedAddressId) {
       alert("Please select a delivery address.");
@@ -53,13 +56,50 @@ export default function Checkout() {
 
         alert("Order Placed Successfully.");
 
+        await fetchOrders();
+
         clearCart();
        
-       navigate("/orders");
+       setOrderPlaced(true);
+
     } catch (error) {
        alert(error.message)
     }
   }
+
+  if (orderPlaced) {
+  return (
+    <div className="container mt-5 text-center">
+
+      <h2 className="text-success">
+        🎉 Order Placed Successfully!
+      </h2>
+
+      <p className="mt-3">
+        Thank you for shopping with ElectroMart.
+      </p>
+
+      <div className="mt-4">
+
+        <button
+          className="btn btn-primary me-3"
+          onClick={() => navigate("/")}
+        >
+          Continue Shopping
+        </button>
+
+        <button
+          className="btn btn-outline-success"
+          onClick={() => navigate("/orders")}
+        >
+          View Orders
+        </button>
+
+      </div>
+
+    </div>
+  );
+}
  
   return (
     <div className="container mt-4">
