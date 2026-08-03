@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import useWishListContext from "../context/WishListContext";
 import useCartContext from "../context/CartContext";
+import useAlertContext from "../context/AlertContext";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product,isWishlist=false}) {
 
   const {wishListItems,toggleWishlist} = useWishListContext();
   const {cartItems,addToCart} = useCartContext();
@@ -11,7 +12,15 @@ export default function ProductCard({ product }) {
     (item) => item._id == product._id
   );
 
-  const isInCartItems = cartItems.some((item)=>item.product._id == product._id)
+  const isInCartItems = cartItems.some((item)=>item.product._id == product._id);
+
+  const { showAlert } = useAlertContext();
+
+  function moveToCart() {
+  addToCart(product);
+  toggleWishlist(product);
+  showAlert("Product moved to Cart.");
+}
 
   return (
     <div className="col-md-3 mb-4">
@@ -37,15 +46,14 @@ export default function ProductCard({ product }) {
          <small className="text-muted">{product.brand}</small>
         <div className="my-2">⭐{product.rating}</div>
           <h5>${product.price}</h5>
-          {isInCartItems ?
-          (
-            <Link to="/cart" className="btn btn-success w-100">
-              Go To Cart</Link>
-          ):
-          (<button className="btn btn-primary mt-auto" 
-            onClick={()=>addToCart(product)}>Add To Cart</button>
-          )}
-          
+          {isWishlist ? (
+               <button className="btn btn-primary mt-auto" onClick={moveToCart}>
+                 Move To Cart
+               </button>) : isInCartItems ? (
+               <Link to="/cart" className="btn btn-success w-100">Go To Cart</Link>
+              ):(<button className="btn btn-primary mt-auto" onClick={() => addToCart(product)}>
+                Add To Cart</button>
+              )}
         </div>
       </div>
     </div>

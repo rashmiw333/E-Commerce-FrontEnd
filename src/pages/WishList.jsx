@@ -18,7 +18,7 @@ export default function WishList(){
             <div className="row">
             {wishListItems.map((product)=>(
                 <ProductCard 
-                key={product._id} product={product}/>
+                key={product._id} product={product} isWishlist={true}/>
             ))}
             </div>
             )}

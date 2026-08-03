@@ -1,12 +1,14 @@
 import { createContext,useContext,useState } from "react";
+import useAlertContext from "./AlertContext";
 
- const CartContext = createContext();
+const CartContext = createContext();
 const useCartContext = ()=> useContext(CartContext);
 export default useCartContext;
 
 export function CartProvider({children}){
 
     const[cartItems,setCartItems] = useState([]);
+    const { showAlert } = useAlertContext();
     console.log(cartItems,"itemsfromContext");
 
     function addToCart(product){
@@ -25,11 +27,12 @@ export function CartProvider({children}){
                 }
             ]);
         }
-
+    showAlert("Product added to Cart.");
     }
 
     function removeFromCart(product){
         setCartItems(cartItems.filter(item=>item.product._id !== product._id));
+        showAlert("Product removed from Cart.");
     }
 
     function increaseQuantity(product){
@@ -38,6 +41,7 @@ export function CartProvider({children}){
      } : item
 
     ));
+    showAlert("Quantity increased.");
     };
 
     function decreaseQuantity(product){
@@ -47,6 +51,7 @@ export function CartProvider({children}){
                 : item
             ).filter((item)=>item.quantity >0)
         );
+        showAlert("Quantity decreased.");
     }
    
     function clearCart() {

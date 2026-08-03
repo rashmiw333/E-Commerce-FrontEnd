@@ -5,6 +5,7 @@ import FilterSidebar from "../components/FilterSidebar";
 import ProductCard from "../components/ProductCard";
 
 export default function ProductListing() {
+
   const { products, categories, productLoading,search } = useProductContext();
 
   const [searchParams] = useSearchParams();

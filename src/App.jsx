@@ -8,16 +8,19 @@ import Cart from "./pages/Cart.jsx";
 import Profile from "./pages/Profile.jsx";
 import OrderHistory from "./pages/OrderHistory.jsx";
 import Checkout from "./pages/Checkout";
+import AlertMessage from "./components/AlertMessage";
 import { ProductProvider } from "./context/ProductContext.jsx";
 import { WishListProvider } from "./context/WishListContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { FeedbackProvider } from "./context/FeedbackContext.jsx";
 import { OrderProvider } from "./context/OrderContext.jsx";
 import { AddressProvider } from "./context/AddressContext.jsx";
+import { AlertProvider } from "./context/AlertContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   return (
+    <AlertProvider>
     <ProductProvider>
       <WishListProvider>
         <AddressProvider>
@@ -26,6 +29,7 @@ export default function App() {
           <FeedbackProvider>
       <Router>
         <NavBar />
+        <AlertMessage />
         <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductListing />} /> 
@@ -43,5 +47,6 @@ export default function App() {
         </AddressProvider>
       </WishListProvider>
     </ProductProvider>
+    </AlertProvider>
   );
 }

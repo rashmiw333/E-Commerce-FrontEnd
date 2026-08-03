@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import useCartContext from "../context/CartContext";
+import useWishListContext from "../context/WishListContext";
+import useAlertContext from "../context/AlertContext";
+
 
 export default function Cart(){
 
@@ -11,6 +14,17 @@ const totalPrice = cartItems.reduce(
   );
 
   const navigate = useNavigate();
+
+  const { toggleWishlist } = useWishListContext();
+  const { showAlert } = useAlertContext();
+
+  function moveToWishlist(product) {
+    console.log(product,"product");
+    
+    toggleWishlist(product);
+    removeFromCart(product);
+    showAlert("Product moved to Wishlist.");
+   }
 
     return (
         <div className="container mt-4">
@@ -63,6 +77,9 @@ const totalPrice = cartItems.reduce(
                             <button className="btn btn-danger mb-2"
                             onClick={()=>removeFromCart(item.product)}>Remove From Cart</button>
 
+                            <button className="btn btn-outline-danger ms-2 mb-2" 
+                            onClick={() => moveToWishlist(item.product)}>Move to Wishlist</button>
+
                           </div>
                         </div>
                        </div>
@@ -90,6 +107,7 @@ const totalPrice = cartItems.reduce(
                             <span>${totalPrice}</span>
                         </h5>
                         <button className="btn btn-warning w-100 mt-3" onClick={() => navigate("/checkout")}>Proceed to Checkout</button>
+                    
                     </div>
                 </div>
              </div>

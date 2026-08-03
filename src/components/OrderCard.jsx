@@ -1,6 +1,6 @@
 
 export default function OrderCard({order}){
-  
+
  return(
   <div className="card mb-3">
     <div className="card-body">
@@ -22,6 +22,6 @@ export default function OrderCard({order}){
             )}
           </ul>
           <hr />
-          <h5>Total : ₹{order.totalAmount}</h5>
+          <h5>Total : ${order.totalAmount}</h5>
     </div>
  </div>)}

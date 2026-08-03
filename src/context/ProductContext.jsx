@@ -13,12 +13,12 @@ export function ProductProvider({ children }) {
 const {
   data: productResponse,
   loading: productLoading,
-} = useFetch("http://localhost:3000/api/products");
+} = useFetch("https://e-commerce-rouge-chi-18.vercel.app/api/products");
 
 const {
   data: categoryResponse,
   loading: categoryLoading,
-} = useFetch("http://localhost:3000/api/categories");
+} = useFetch("https://e-commerce-rouge-chi-18.vercel.app/api/categories");
 
 const products = productResponse?.data?.products || [];
 const categories = categoryResponse?.data?.categories || [];
