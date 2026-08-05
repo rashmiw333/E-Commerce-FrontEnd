@@ -13,7 +13,7 @@ export function OrderProvider({ children }) {
 
   async function fetchOrders() {
     try {
-      const response = await fetch("http://localhost:3000/api/orders");
+      const response = await fetch("https://e-commerce-rouge-chi-18.vercel.app/api/orders");
       const data = await response.json();
 
       if (response.ok) {
