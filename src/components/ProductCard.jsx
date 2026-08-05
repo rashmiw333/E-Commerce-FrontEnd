@@ -3,7 +3,7 @@ import useWishListContext from "../context/WishListContext";
 import useCartContext from "../context/CartContext";
 import useAlertContext from "../context/AlertContext";
 
-export default function ProductCard({ product,isWishlist=false}) {
+export default function ProductCard({product,filters,isWishlist=false}) {
 
   const {wishListItems,toggleWishlist} = useWishListContext();
   const {cartItems,addToCart} = useCartContext();
@@ -32,7 +32,8 @@ export default function ProductCard({ product,isWishlist=false}) {
           </span>
         </div>
         
-        <Link to={`/products/${product._id}`}>
+        <Link to={`/products/${product._id}`}
+              state={filters}>
           <img
             src={product.image}
             className="card-img-top"

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState,useEffect } from "react";
+import { useSearchParams ,useLocation } from "react-router-dom";
 import useProductContext  from "../context/ProductContext";
 import FilterSidebar from "../components/FilterSidebar";
 import ProductCard from "../components/ProductCard";
@@ -8,27 +8,55 @@ export default function ProductListing() {
 
   const { products, categories, productLoading,search } = useProductContext();
 
-  const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams(); 
+
+  const location = useLocation();
+  const previousFilters = location.state;
 
   const initialCategory = searchParams.get("category") || "";
 
-  const [selectedCategory, setSelectedCategory] =
-    useState(initialCategory);
 
-  const [rating, setRating] = useState(1);
+  useEffect(() => {
+  if (previousFilters?.search) {
+    setSearch(previousFilters.search);
+  }
+}, []);
+
+  const [selectedCategories, setSelectedCategories] = useState(
+  previousFilters?.selectedCategories || (initialCategory ? [initialCategory] : [])
+  );
+
+  const [rating, setRating] = useState(
+   previousFilters?.rating || 1
+  );
 
   const [sort, setSort] = useState(
-    "");
+   previousFilters?.sort || ""
+  );
+
+  function handleCategory(category) {
+  if (selectedCategories.includes(category)) {
+    setSelectedCategories(
+      selectedCategories.filter((item) => item !== category)
+    );
+  } else {
+    setSelectedCategories([
+      ...selectedCategories,
+      category,
+    ]);
+  }
+}
 
   let filteredProducts = [...products];
 
+  
 
   // Category Filter
-  if (selectedCategory !== "") {
-    filteredProducts = filteredProducts.filter(
-      (product) => product.category === selectedCategory
-    );
-  }
+if (selectedCategories.length > 0) {
+  filteredProducts = filteredProducts.filter((product) =>
+    selectedCategories.includes(product.category)
+  );
+}
 
   // Rating Filter
   filteredProducts = filteredProducts.filter(
@@ -57,7 +85,7 @@ export default function ProductListing() {
 
 
   function clearFilters() {
-    setSelectedCategory("");
+    setSelectedCategories([]);;
     setRating(1);
     setSort("");
   }
@@ -73,8 +101,8 @@ export default function ProductListing() {
         <div className="col-lg-3 col-md-4 col-sm-6 mb-4 border-end">
           <FilterSidebar
             categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            selectedCategories={selectedCategories}
+            handleCategory={handleCategory}
             rating={rating}
             setRating={setRating}
             sort={sort}
@@ -86,9 +114,9 @@ export default function ProductListing() {
         <div className="col-md-9">
           <div className="d-flex align-items-center gap-3 mb-4">
             <h3 className="mb-0">
-              {selectedCategory === ""
+              {selectedCategories === ""
                 ? "Showing All Products"
-                : `Showing ${selectedCategory}`}
+                : `Showing ${selectedCategories.join(", ")}`}
             </h3>
             <span className="text-muted">
               {filteredProducts.length} Products
@@ -96,12 +124,23 @@ export default function ProductListing() {
           </div>
 
           <div className="row">
-            {filteredProducts.map((product) => (
+            {filteredProducts.length===0 ?(
+              <div className="text-center mt-5">
+              <h4>No Products Found</h4>
+              <p>Try another search or filter.</p>
+              </div>):(filteredProducts.map((product) => (
               <ProductCard
                 key={product._id}
                 product={product}
+                filters={{
+                selectedCategories,
+                 rating,
+                 sort,
+                 search,
+               }}
               />
-            ))}
+              ))
+              )}
           </div>
         </div>
       </div>

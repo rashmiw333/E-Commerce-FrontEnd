@@ -1,4 +1,4 @@
-import {Link,useParams} from "react-router-dom";
+import {Link,useParams,useLocation} from "react-router-dom";
 import useProductContext from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import useWishListContext from "../context/WishListContext";
@@ -14,6 +14,8 @@ export default function ProductDetails(){
     const { wishListItems, toggleWishlist } = useWishListContext();
     const {addToCart} = useCartContext();
 
+    const location = useLocation();
+
     if(productLoading){
         return <h3 className="text-center mt-5">Loading...</h3>
     }
@@ -28,7 +30,7 @@ export default function ProductDetails(){
 
     return(
         <div className="container mt-5">
-            <div className="row align-items-start mt-5">
+            <div className="row align-items-start mt-5 g-5">
                 <div className="col-md-5">
 
                     <img src={product.image} alt={product.name} 
@@ -45,8 +47,8 @@ export default function ProductDetails(){
                     <h5 className="text-success">${product.price}
                     </h5>
                     <p>⭐{product.rating}</p>
-                    <p><strong>Brand:</strong>{product.brand}</p>
-                    <p><strong>Category:</strong>{product.category}</p>
+                    <p><strong>Brand: </strong>{product.brand}</p>
+                    <p><strong>Category: </strong>{product.category}</p>
                     <p>{product.description}</p>
                     <button className="btn btn-primary me-2" onClick={()=>addToCart(product)}>Add To Cart</button>
                     <button className="btn btn-outline-danger" onClick={() => toggleWishlist(product)}>
@@ -54,7 +56,9 @@ export default function ProductDetails(){
                     </button>
                     <br />
                     <br />
-                    <Link to="/products" className="btn btn-secondary">Back To Products</Link>
+                    <Link to="/products" state={location.state} className="btn btn-secondary">
+                      Back To Products
+                    </Link>
                 </div>  
             </div>
             <hr />

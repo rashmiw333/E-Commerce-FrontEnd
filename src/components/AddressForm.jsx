@@ -21,34 +21,50 @@ export default function AddressForm({ editAddress, clearEdit }) {
   }, [editAddress]);
 
   function handleSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const address = {
-      type,
-      street,
-      city,
-      state,
-      pincode,
-    };
-
-    if (editAddress) {
-      updateAddress({
-        ...address,
-        id: editAddress.id,
-        isDefault: editAddress.isDefault,
-      });
-
-      clearEdit();
-    } else {
-      addAddress(address);
-    }
-
-    setType("");
-    setStreet("");
-    setCity("");
-    setState("");
-    setPincode("");
+  if (
+    !type.trim() ||
+    !street.trim() ||
+    !city.trim() ||
+    !state.trim() ||
+    !pincode.trim()
+  ) {
+    alert("Please fill all fields.");
+    return;
   }
+
+  if (pincode.length !== 6) {
+    alert("Pincode must be 6 digits.");
+    return;
+  }
+
+  const address = {
+    type: type.trim(),
+    street: street.trim(),
+    city: city.trim(),
+    state: state.trim(),
+    pincode,
+  };
+
+  if (editAddress) {
+    updateAddress({
+      ...address,
+      id: editAddress.id,
+      isDefault: editAddress.isDefault,
+    });
+
+    clearEdit();
+  } else {
+    addAddress(address);
+  }
+
+  setType("");
+  setStreet("");
+  setCity("");
+  setState("");
+  setPincode("");
+}
 
   return (
     <form onSubmit={handleSubmit} className="card p-3 mb-4">
@@ -60,6 +76,7 @@ export default function AddressForm({ editAddress, clearEdit }) {
         placeholder="Address Type"
         value={type}
         onChange={(e) => setType(e.target.value)}
+        required
       />
 
       <input
@@ -67,6 +84,7 @@ export default function AddressForm({ editAddress, clearEdit }) {
         placeholder="Street"
         value={street}
         onChange={(e) => setStreet(e.target.value)}
+        required
       />
 
       <input
@@ -74,6 +92,7 @@ export default function AddressForm({ editAddress, clearEdit }) {
         placeholder="City"
         value={city}
         onChange={(e) => setCity(e.target.value)}
+        required
       />
 
       <input
@@ -81,13 +100,16 @@ export default function AddressForm({ editAddress, clearEdit }) {
         placeholder="State"
         value={state}
         onChange={(e) => setState(e.target.value)}
+        required
       />
 
-      <input
-        className="form-control mb-3"
+      <input type="text" className="form-control mb-3"
         placeholder="Pincode"
-        value={pincode}
-        onChange={(e) => setPincode(e.target.value)}
+        value={pincode} maxLength={6}
+        onChange={(e) => {
+        const value = e.target.value.replace(/\D/g, "");
+        setPincode(value)}}
+        required
       />
 
       <button className="btn btn-success">

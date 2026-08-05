@@ -1,7 +1,7 @@
 export default function FilterSidebar({
   categories,
-  selectedCategory,
-  setSelectedCategory,
+  selectedCategories,
+  handleCategory,
   rating,
   setRating,
   sort,
@@ -22,29 +22,22 @@ export default function FilterSidebar({
           <input
             className="form-check-input"
             type="checkbox"
-            checked={selectedCategory === category.name}
-            onChange={() =>
-              setSelectedCategory(
-                selectedCategory === category.name ? "": category.name)}/>
+            checked={selectedCategories.includes(category.name)}
+            onChange={() => handleCategory(category.name)}/>
           <label className="form-check-label">{category.name}</label>
         </div>
       ))}
       <hr />
 
-      <h5>Rating</h5>
-      {[4, 3, 2, 1].map((star) => (
-        <div className="form-check" key={star}>
+      <h5 className="mt-4">Minimum Rating</h5>
 
-          <input
-            type="radio"
-            className="form-check-input"
-            checked={rating === star}
-            onChange={() => setRating(star)}
-          />
+        <input type="range" className="form-range"
+       min="1" max="5" step="1" 
+       value={rating}
+         onChange={(e)=>setRating(Number(e.target.value))}
+        />
 
-          <label>{star} ★ & Above</label>
-        </div>
-      ))}
+      <p>{rating} ★ & Above</p>
 
       <hr />
 

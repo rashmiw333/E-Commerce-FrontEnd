@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import  useCartContext from "../context/CartContext";
 import useAddressContext from "../context/AddressContext";
 import useOrderContext from "../context/OrderContext";
+import useAlertContext from "../context/AlertContext";
 
 export default function Checkout() {
   const { cartItems,clearCart } = useCartContext();
   const { addresses } = useAddressContext();
   const { fetchOrders } = useOrderContext();
+  const { showAlert } = useAlertContext();
 
   const [selectedAddressId, setSelectedAddressId] = useState("");
   const [orderPlaced, setOrderPlaced] = useState(false);
@@ -21,7 +24,7 @@ export default function Checkout() {
 
  async function handlePlaceOrder() {
     if (!selectedAddressId) {
-      alert("Please select a delivery address.");
+      showAlert("Please select a delivery address.");
       return;
     }
 
@@ -42,7 +45,7 @@ export default function Checkout() {
     console.log(order);
 
    try {
-       const response = await fetch("http://localhost:3000/api/orders", {
+       const response = await fetch("https://e-commerce-rouge-chi-18.vercel.app/api/orders", {
         method: "POST",
         headers: {
         "Content-Type": "application/json",
@@ -54,7 +57,7 @@ export default function Checkout() {
         throw new Error("Failed to place order.");
         }
 
-        alert("Order Placed Successfully.");
+        showAlert("Order Placed Successfully.");
 
         await fetchOrders();
 
@@ -63,7 +66,7 @@ export default function Checkout() {
        setOrderPlaced(true);
 
     } catch (error) {
-       alert(error.message)
+       showAlert(error.message)
     }
   }
 
@@ -108,6 +111,9 @@ export default function Checkout() {
       {/* Delivery Address */}
       <div className="card p-3 mt-4">
         <h4>Select Delivery Address</h4>
+
+        <Link to="/profile" className="btn btn-outline-primary btn-sm">
+         Add Address</Link>
 
         {addresses.length === 0 ? (
           <p>No address available.</p>

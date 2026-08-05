@@ -33,13 +33,13 @@ export default function Profile() {
 
       <h3>Saved Addresses</h3>
 
-      {addresses.map((address) => (
-        <AddressCard
-          key={address.id}
-          address={address}
-          onEdit={setEditAddress}
-        />
-      ))}
+      {addresses.length === 0 ? (
+        <p className="text-muted">No saved addresses added.</p>
+        ) : (addresses.map((address) => (
+        <AddressCard key={address.id} address={address}
+         onEdit={setEditAddress}/>
+       ))
+    )}
 
       <Link
         to="/orders"

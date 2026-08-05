@@ -1,5 +1,6 @@
 import  useProductContext  from "../context/ProductContext";
 import CategoryCard from "../components/CategoryCard";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const {categories,products,categoryLoading,productLoading} = useProductContext();
@@ -14,7 +15,7 @@ export default function Home() {
 
       <h3 className="mb-4">Shop by Category</h3>
 
-      <div className="row g-3">
+      <div className="row justify-content-center g-3 me-2">
         {categories.map((category) => (
           <CategoryCard
             key={category._id}
@@ -35,9 +36,11 @@ export default function Home() {
         Featured Products
       </h3>
 
-      <div className="row">
+      <div className="row g-3">
         {products.slice(0, 4).map((product) => (
           <div className="col-md-3" key={product._id}>
+            <Link to={`/products/${product._id}`}
+              className="text-decoration-none text-dark">
             <div className="card">
               <img
                 src={product.image}
@@ -49,6 +52,7 @@ export default function Home() {
                 <h5>${product.price}</h5>
               </div>
             </div>
+            </Link>
           </div>
         ))}
 

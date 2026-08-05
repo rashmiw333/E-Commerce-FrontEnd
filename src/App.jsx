@@ -9,6 +9,7 @@ import Profile from "./pages/Profile.jsx";
 import OrderHistory from "./pages/OrderHistory.jsx";
 import Checkout from "./pages/Checkout";
 import AlertMessage from "./components/AlertMessage";
+import Footer from "./components/Footer";
 import { ProductProvider } from "./context/ProductContext.jsx";
 import { WishListProvider } from "./context/WishListContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
         </Routes>
+        <Footer />
       </Router>
           </FeedbackProvider>
         </CartProvider>
