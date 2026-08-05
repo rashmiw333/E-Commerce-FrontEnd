@@ -30,6 +30,7 @@ export default function App() {
           <FeedbackProvider>
       <Router>
         <NavBar />
+            <main className="flex-grow-1">
         <AlertMessage />
         <Routes>
         <Route path="/" element={<Home />} />
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
         </Routes>
+        </main>
         <Footer />
       </Router>
           </FeedbackProvider>

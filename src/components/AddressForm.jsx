@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import useAddressContext from "../context/AddressContext";
+import useAlertContext from "../context/AlertContext";
 
 export default function AddressForm({ editAddress, clearEdit }) {
   const { addAddress, updateAddress } = useAddressContext();
@@ -9,6 +10,7 @@ export default function AddressForm({ editAddress, clearEdit }) {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
+   const { showAlert } = useAlertContext();
 
   useEffect(() => {
     if (editAddress) {
@@ -30,12 +32,12 @@ export default function AddressForm({ editAddress, clearEdit }) {
     !state.trim() ||
     !pincode.trim()
   ) {
-    alert("Please fill all fields.");
+    showAlert("Please fill all fields.");
     return;
   }
 
   if (pincode.length !== 6) {
-    alert("Pincode must be 6 digits.");
+    showAlert("Pincode must be 6 digits.");
     return;
   }
 

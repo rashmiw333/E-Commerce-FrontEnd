@@ -112,8 +112,10 @@ export default function Checkout() {
       <div className="card p-3 mt-4">
         <h4>Select Delivery Address</h4>
 
-        <Link to="/profile" className="btn btn-outline-primary btn-sm">
+      <div className="text-start mb-3">
+        <Link to="/profile" className="btn btn-success">
          Add Address</Link>
+      </div>
 
         {addresses.length === 0 ? (
           <p>No address available.</p>
