@@ -29,6 +29,7 @@ export default function App() {
         <CartProvider>
           <FeedbackProvider>
       <Router>
+        <div className="d-flex flex-column min-vh-100">
         <NavBar />
             <main className="flex-grow-1">
         <AlertMessage />
@@ -44,6 +45,7 @@ export default function App() {
         </Routes>
         </main>
         <Footer />
+        </div>
       </Router>
           </FeedbackProvider>
         </CartProvider>
