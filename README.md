@@ -308,7 +308,7 @@ The React frontend uses:
 
 GitHub Repository:
 
-https://github.com/rashmiw333/E-Commerce-FrontEnd
+https://github.com/rashmiw333/Electromart
 
 Vercel Deployment:
 
@@ -318,7 +318,7 @@ https://e-commerce-front-end-tawny.vercel.app/
 
 GitHub Repository:
 
-https://github.com/rashmiw333/E-Commercebackend
+https://github.com/rashmiw333/Electromart-Backend
 
 Vercel Deployment:
 
