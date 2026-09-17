@@ -1,6 +1,6 @@
-# E-Commerce Application
+# Electromart Application
 
-A full-stack **E-Commerce application** for browsing electronics,
+A full-stack **Electromart application** for browsing electronics,
 managing products and categories, maintaining a wishlist and shopping
 cart, managing addresses and user profile information, and placing
 orders.
