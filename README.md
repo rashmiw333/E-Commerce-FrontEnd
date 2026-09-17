@@ -30,9 +30,6 @@ npm install
 node index.js
 ```
 
-Make sure the MongoDB connection and required environment variables are
-configured before starting the backend.
-
 ------------------------------------------------------------------------
 
 ## Technologies
